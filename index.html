@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Animation Portfolio Dashboard</title>
+  <style>
+    /* ===== Global Styles ===== */
+    * { box-sizing: border-box; transition: background 0.3s, color 0.3s; }
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #1a1a1a, #111);
+      color: #eee;
+    }
+    a { text-decoration: none; }
+
+    /* ===== Header ===== */
+    header {
+      background: rgba(0,0,0,0.9);
+      color: white;
+      padding: 15px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #ff9800;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: 1px;
+    }
+    nav a {
+      color: white;
+      margin-left: 20px;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+    nav a:hover { color: #ff9800; }
+
+    /* Toggle Button */
+    .toggle-btn {
+      background: #ff9800;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-left: 20px;
+      color: #111;
+    }
+    .toggle-btn:hover { background: #fff; }
+
+    /* ===== Dashboard Layout ===== */
+    .dashboard {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      min-height: calc(100vh - 60px);
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background: #111;
+      color: white;
+      padding: 20px;
+      border-right: 2px solid #ff9800;
+    }
+    .sidebar h2 {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: #ff9800;
+    }
+    .sidebar ul { list-style: none; padding: 0; }
+    .sidebar ul li { margin-bottom: 15px; }
+    .sidebar ul li a {
+      color: #ddd;
+      font-size: 14px;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+    }
+    .sidebar ul li a:hover {
+      color: #ff9800;
+      transform: translateX(5px);
+    }
+
+    /* Main Content */
+    .main {
+      padding: 20px;
+      animation: fadeIn 1.5s ease;
+    }
+    .section { margin-bottom: 50px; }
+    .section h2 {
+      margin-bottom: 15px;
+      font-size: 22px;
+      border-left: 4px solid #ff9800;
+      padding-left: 10px;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      padding: 15px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      backdrop-filter: blur(10px);
+    }
+    .card:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 12px 25px rgba(255,152,0,0.3);
+    }
+    .card video, .card img {
+      max-width: 100%;
+      height: 180px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+    .card h3 {
+      margin: 10px 0 5px;
+      font-size: 16px;
+      color: #ffcc80;
+    }
+    .card p {
+      font-size: 13px;
+      color: #aaa;
+    }
+
+    /* Contact */
+    .contact {
+      background: rgba(255,255,255,0.05);
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 600px;
+      backdrop-filter: blur(10px);
+    }
+    .contact input, .contact textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-family: inherit;
+    }
+    .btn {
+      display: inline-block;
+      background: #ff9800;
+      color: #111;
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+    .btn:hover { background: #fff; color: #111; }
+
+    /* Footer */
+    footer {
+      background: #000;
+      color: #ccc;
+      text-align: center;
+      padding: 15px;
+      font-size: 13px;
+      border-top: 2px solid #ff9800;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== Light Mode ===== */
+    body.light {
+      background: #f4f6f9;
+      color: #111;
+    }
+    body.light header {
+      background: #fff;
+      color: #111;
+      border-bottom: 2px solid #333;
+    }
+    body.light nav a { color: #111; }
+    body.light .sidebar {
+      background: #f9f9f9;
+      color: #111;
+      border-right: 2px solid #333;
+    }
+    body.light .sidebar ul li a { color: #333; }
+    body.light .card {
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    body.light .card h3 { color: #333; }
+    body.light .card p { color: #555; }
+    body.light .contact { background: #fff; }
+    body.light footer {
+      background: #eee;
+      color: #333;
+      border-top: 2px solid #333;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <h1>🎥 My Creative Portfolio</h1>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#vfx">VFX</a>
+      <a href="#maya">Maya 3D</a>
+      <a href="#graphics">Graphic Design</a>
+      <a href="#contact">Contact</a>
+      <button class="toggle-btn" id="themeToggle">🌙 Dark</button>
+    </nav>
+  </header>
+
+  <!-- Dashboard -->
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h2>📂 Categories</h2>
+      <ul>
+        <li><a href="#about">👤 About Me</a></li>
+        <li><a href="#vfx">✨ VFX Projects</a></li>
+        <li><a href="#maya">🦾 Maya 3D Models</a></li>
+        <li><a href="#graphics">🎨 Graphic Designs</a></li>
+        <li><a href="#contact">✉️ Contact</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <!-- About -->
+      <section id="about" class="section">
+        <h2>👤 About Me</h2>
+        <p>Hello! I’m a multimedia artist specializing in <b>VFX</b>, <b>3D Modeling with Maya</b>, and <b>Graphic Design</b>. This dashboard showcases my best creative projects.</p>
+      </section>
+
+      <!-- VFX -->
+      <section id="vfx" class="section">
+        <h2>✨ VFX Projects</h2>
+        <div class="cards">
+          <div class="card">
+            <video controls>
+              <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+            </video>
+            <h3>Explosion Simulation</h3>
+            <p>After Effects + Nuke compositing.</p>
+          </div>
+          <div class="card">
+            <video controls>
+              <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4">
+            </video>
+            <h3>Particle Effects</h3>
+            <p>Custom particle animation with Houdini.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Maya 3D -->
+      <section id="maya" class="section">
+        <h2>🦾 Maya 3D Models</h2>
+        <div class="cards">
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1609522505127-52c9f8f8a5c3?w=600" alt="3D Car">
+            <h3>3D Car Model</h3>
+            <p>Modeled and textured in Maya + Substance Painter.</p>
+          </div>
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1625842407422-5ec5b9c6e6e3?w=600" alt="3D Robot">
+            <h3>Robot Character</h3>
+            <p>High-poly sci-fi robot with detailed rig.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Graphic Design -->
+      <section id="graphics" class="section">
+        <h2>🎨 Graphic Design</h2>
+        <div class="cards">
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1607082349566-187342e843f3?w=600" alt="Poster">
+            <h3>Movie Poster</h3>
+            <p>Creative typography and matte painting.</p>
+          </div>
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1505685296765-3a2736de412f?w=600" alt="Logo Design">
+            <h3>Logo Design</h3>
+            <p>Minimalist branding concepts for startups.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section id="contact" class="section">
+        <h2>✉️ Contact Me</h2>
+        <div class="contact">
+          <input type="text" id="name" placeholder="Your Name" required>
+          <input type="email" id="email" placeholder="Your Email" required>
+          <textarea id="message" rows="5" placeholder="Your Message"></textarea>
+          <button class="btn" id="sendBtn">Send Message</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    © 2025 My Creative Portfolio | Designed with ❤️
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Contact form
+    document.getElementById("sendBtn").addEventListener("click", function() {
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const message = document.getElementById("message").value;
+
+      if(name && email && message){
+        alert("Thank you " + name + "! Your message has been sent.");
+      } else {
+        alert("Please fill in all fields before sending.");
+      }
+    });
+
+    // Theme toggle
+    const themeToggle = document.getElementById("themeToggle");
+    themeToggle.addEventListener("click", () => {
+      document.body.classList.toggle("light");
+      if(document.body.classList.contains("light")){
+        themeToggle.textContent = "🌞 Light";
+      } else {
+        themeToggle.textContent = "🌙 Dark";
+      }
+    });
+  </script>
+</body>
+</html>
